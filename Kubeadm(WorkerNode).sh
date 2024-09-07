@@ -21,15 +21,15 @@ EOF
 sudo sysctl --system
 
 ## Install Docker Runtime
-apt update -y
-apt install docker.io -y
+sudo apt update -y
+sudo apt install docker.io -y
 
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 
-systemctl start docker
-systemctl enable docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
 # Add Kubernetes APT repository and install required packages
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
