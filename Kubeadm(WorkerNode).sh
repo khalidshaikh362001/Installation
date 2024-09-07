@@ -43,6 +43,6 @@ sudo apt-get install -y jq
 sudo systemctl enable --now kubelet
 sudo systemctl start kubelet
 
-sudo kubeadm reset pre-flight checks
+sudo kubeadm reset pre-flight checks -y
 
 echo " sudo <token> --v=5"
