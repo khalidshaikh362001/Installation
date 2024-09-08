@@ -48,6 +48,17 @@ sudo apt-get install -y jq
 sudo systemctl enable --now kubelet
 sudo systemctl start kubelet
 
+## Install Docker Runtime
+sudo apt update -y
+sudo apt install docker.io -y
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+systemctl start docker
+systemctl enable docker
+
 sudo kubeadm reset pre-flight checks
 
 echo " sudo <token> --v=5"
