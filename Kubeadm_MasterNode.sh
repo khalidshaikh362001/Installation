@@ -55,8 +55,8 @@ sudo apt install docker.io -y
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
-systemctl start docker
-systemctl enable docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
 #Only Master Node 
 sudo kubeadm config images pull
