@@ -20,16 +20,24 @@ EOF
 # Apply sysctl params without reboot
 sudo sysctl --system
 
-## Install Docker Runtime
-sudo apt update -y
-sudo apt install docker.io -y
+## Install CRIO Runtime
+sudo apt-get update -y
+sudo apt-get install -y software-properties-common curl apt-transport-https ca-certificates gpg
 
-sudo groupadd docker
-sudo usermod -aG docker $USER
+sudo curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key | sudo gpg --dearmor -o
+/etc/apt/keyrings/cri-o-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg]
+https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" | sudo tee
+/etc/apt/sources.list.d/cri-o.list
 
+sudo apt-get update -y
+sudo apt-get install -y cri-o
 
-sudo systemctl start docker
-sudo systemctl enable docker
+sudo systemctl daemon-reload
+sudo systemctl enable crio --now
+sudo systemctl start crio.service
+
+echo "CRI runtime installed successfully"
 
 # Add Kubernetes APT repository and install required packages
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
